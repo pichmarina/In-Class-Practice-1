@@ -5,6 +5,7 @@ const multiparty = require("multiparty");
 const { engine } = require("express-handlebars");
 
 const app = express();
+const PORT = 3000;
 
 app.disable("x-powered-by");
 
@@ -108,8 +109,23 @@ app.get("/items/:id", (req, res) => {
   res.render("items/detail");
 });
 
+app.post("/items/:id/status", (req, res) => {
+  const report = global.reports.find(r => r.id === req.params.id);
+  if (!report) return res.redirect("/dashboard");
 
-const PORT = 3000;
+  const newStatus = req.body.status;
+
+  if (["Lost", "Found", "Closed"].includes(newStatus)) {
+    report.status = newStatus;
+  }
+
+  res.redirect("/items/" + report.id);
+});
+
+app.post("/items/:id/delete", (req, res) => {
+  global.reports = global.reports.filter(r => r.id !== req.params.id);
+  res.redirect("/dashboard");
+});
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
