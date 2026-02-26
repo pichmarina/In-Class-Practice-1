@@ -1,1 +1,27 @@
-<h2>Dashboard (Coming Soon)</h2>
+<h2>Dashboard</h2>
+
+{{#if reports.length}}
+<table border="1" cellpadding="10">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+
+  {{#each reports}}
+  <tr>
+    <td>{{this.id}}</td>
+    <td>{{this.name}}</td>
+    <td>{{this.date}}</td>
+    <td>{{this.status}}</td>
+    <td>
+      <a href="/items/{{this.id}}">View Details</a>
+    </td>
+  </tr>
+  {{/each}}
+</table>
+{{else}}
+<p>No reports yet.</p>
+{{/if}}
