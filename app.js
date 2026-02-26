@@ -35,11 +35,19 @@ app.get("/report", (req, res) => {
 });
 
 app.get("/dashboard", (req, res) => {
-  res.render("dashboard");
+  res.render("dashboard", { reports: global.reports });
 });
 
 app.get("/items/:id", (req, res) => {
-  res.render("items/detail");
+  const report = global.reports.find(r => r.id === req.params.id);
+  if (!report) return res.redirect("/dashboard");
+
+  res.render("items/detail", {
+    report,
+    isLost: report.status === "Lost",
+    isFound: report.status === "Found",
+    isClosed: report.status === "Closed",
+  });
 });
 
 app.post("/items/:id/status", (req, res) => {
