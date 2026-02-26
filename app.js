@@ -106,7 +106,13 @@ app.get("/dashboard", (req, res) => {
 app.get("/items/:id", (req, res) => {
   const report = global.reports.find(r => r.id === req.params.id);
   if (!report) return res.redirect("/dashboard");
-  res.render("items/detail");
+
+  res.render("items/detail", {
+    report,
+    isLost: report.status === "Lost",
+    isFound: report.status === "Found",
+    isClosed: report.status === "Closed",
+  });
 });
 
 app.post("/items/:id/status", (req, res) => {
