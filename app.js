@@ -34,10 +34,12 @@ app.get("/report", (req, res) => {
 });
 
 app.get("/dashboard", (req, res) => {
-  res.render("dashboard");
+  res.render("dashboard", { reports: global.reports });
 });
 
 app.get("/items/:id", (req, res) => {
+  const report = global.reports.find(r => r.id === req.params.id);
+  if (!report) return res.redirect("/dashboard");
   res.render("items/detail");
 });
 
