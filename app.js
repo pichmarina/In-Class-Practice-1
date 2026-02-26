@@ -122,9 +122,14 @@ app.post("/items/:id/status", (req, res) => {
   res.redirect("/items/" + report.id);
 });
 
-app.post("/items/:id/delete", (req, res) => {
-  global.reports = global.reports.filter(r => r.id !== req.params.id);
-  res.redirect("/dashboard");
+app.get("/items/:id", (req, res) => {
+  const report = global.reports.find(r => r.id === req.params.id);
+
+  if (!report) {
+    return res.redirect("/dashboard");
+  }
+
+  res.render("items/detail", { report });
 });
 
 app.listen(PORT, () => {
