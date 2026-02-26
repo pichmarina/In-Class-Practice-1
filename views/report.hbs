@@ -1,1 +1,25 @@
-<h2>Report Page (Coming Soon)</h2>
+<h2>Report Lost Item</h2>
+
+<form action="/report" method="POST" enctype="multipart/form-data">
+
+  <label>Name</label>
+  <input type="text" name="name" required>
+
+  <label>Description</label>
+  <textarea name="description" required></textarea>
+
+  <label>Location Lost</label>
+  <input type="text" name="location" required>
+
+  <label>Date</label>
+  <input type="date" name="date" required>
+
+  <label>Contact Email</label>
+  <input type="email" name="contact" required>
+
+  <label>Upload Image</label>
+  <input type="file" name="image" accept="image/*" required>
+
+  <button type="submit">Submit</button>
+
+</form>
